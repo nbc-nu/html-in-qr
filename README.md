@@ -12,3 +12,7 @@ existem 3 passos supermega faceis para fazer isso com esse repositorio.
 
 # A ciencia por traz
 esse repositorio simplesmente imita o data:text/html;, que é uma resposta do codigo que escreveu sendo exibido na tela. é exatamente isso. ele lê o html no parametro "c" e exibe na tela. simples. da até para utilizar este repositorio para hospedar um outro html qualquer. só o link que ninguem vai querer digitar de tão grande, anão ser que mande para copiar e colar. por isso serve no qrcode. a pessoa não precisa reescrever o HTML inteiro para acessar seu site, o html ja esta escrito no qrcode
+
+# Para facilitar
+aqui esta ja o link como deve colocar no qrcode
+https://nbc-nu.github.io/html-in-qr/?t=html&c= <---- cole seu html em uma linha aqui
