@@ -7,7 +7,7 @@ hospedar um site em um qrcode pode ser muito mais pratico do que pagar para algu
 # como fazer seu qrcode em 2 minutos
 existem 3 passos supermega faceis para fazer isso com esse repositorio.
 1. escreva seu site em html, CSS e JS (css e js opicional, é só porque tambem roda no qrcode).
-2. cole o html com o link desse repositorio com isso no final ?t=html&c= <--- cole seu html ali no parametro de URL "c"
+2. cole o html com o link desse repositorio com isso no final ?t=html&c= <--- cole seu html ali no parametro de URL "c". COLOQUE EM BASE64 *veja a ultima seção para saber mais*
 3. cole todo o link jundo no editor de qrcode sem quebra de linhas e sem espaços (opicional se quizer minimizar o arquivo para caber no qrcode)
 
 # A ciencia por traz
@@ -16,3 +16,6 @@ esse repositorio simplesmente imita o data:text/html;, que é uma resposta do co
 # Para facilitar
 aqui esta ja o link como deve colocar no qrcode
 https://nbc-nu.github.io/html-in-qr/?t=html&c= <---- cole seu html em uma linha aqui
+
+# IMPORTANTE!! EXTREMAMENTE RECOMENDADO!!
+Quando colocar o html, certifique-se de compilar para Base64, senão o celular pode achar que é uma nota
