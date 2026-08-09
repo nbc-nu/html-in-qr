@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<script>
+    const params = new URLSearchParams(window.location.search);
+    const htmlCode = params.get('c');
+
+    if (htmlCode) {
+        document.open();
+        document.write(htmlCode);
+        document.close();
+    }
+</script>
+</body>
+</html>
+//isso que roda no seu navegador
