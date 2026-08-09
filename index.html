@@ -2,51 +2,41 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <title>Carregando...</title>
 </head>
 <body>
 <script>
-    const params = new URLSearchParams(window.location.search);
-    let base64Code = params.get('c');
-
-    if (base64Code) {
+    // Captura o texto que vem depois de 'c=' não importa onde ele esteja na URL
+    const urlStr = window.location.href;
+    const match = urlStr.match(/[?&]c=([^&]+)/);
+    
+    if (match && match[1]) {
         try {
-
-            base64Code = base64Code.replace(/[^A-Za-z0-9+/=_-]/g, '');
+            let base64Code = match[1];
             
-
+            // Limpa caracteres inválidos e corrige o tamanho do Base64
+            base64Code = base64Code.replace(/[^A-Za-z0-9+/=_-]/g, '');
             base64Code = base64Code.padEnd(base64Code.length + (4 - base64Code.length % 4) % 4, '=');
             
-
-            const cleanBase64 = base64Code.replace(/-/g, '+').replace(/_/g, '/');
-            
-
-            const rawData = window.atob(cleanBase64);
-            const outputArray = new Uint8Array(rawData.length);
-            for (let i = 0; i < rawData.length; ++i) {
-                outputArray[i] = rawData.charCodeAt(i);
+            // Decodifica o Base64 nativamente usando uma técnica que aceita QUALQUER acentuação
+            const binaryString = window.atob(base64Code.replace(/-/g, '+').replace(/_/g, '/'));
+            const len = binaryString.length;
+            const bytes = new Uint8Array(len);
+            for (let i = 0; i < len; i++) {
+                bytes[i] = binaryString.charCodeAt(i);
             }
-            
+            const decodedHtml = new TextDecoder('utf-8').decode(bytes);
 
-            const decodedHtml = new TextDecoder('utf-8').decode(outputArray);
-
+            // Injeta o HTML na página limpa
             document.open();
             document.write(decodedHtml);
             document.close();
         } catch (e) {
-            
-            try {
-                const rawData = window.atob(base64Code.replace(/[^A-Za-z0-9+/=]/g, ''));
-                document.open();
-                document.write(rawData);
-                document.close();
-            } catch (err2) {
-                document.body.innerHTML = "<h3>Erro ao processar o código do QR Code.</h3>";
-            }
+            document.body.innerHTML = "<h2>Erro ao ler o código do QR Code.</h2>";
         }
     } else {
-        document.body.innerHTML = "<h3>Nenhum código foi enviado na URL.</h3>";
+        document.body.innerHTML = "<h2>Nenhum HTML encontrado no QR Code.</h2>";
     }
 </script>
 </body>
 </html>
-
