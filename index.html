@@ -2,11 +2,9 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Carregando...</title>
 </head>
 <body>
 <script>
-    // Captura o texto que vem depois de 'c=' não importa onde ele esteja na URL
     const urlStr = window.location.href;
     const match = urlStr.match(/[?&]c=([^&]+)/);
     
@@ -14,11 +12,10 @@
         try {
             let base64Code = match[1];
             
-            // Limpa caracteres inválidos e corrige o tamanho do Base64
             base64Code = base64Code.replace(/[^A-Za-z0-9+/=_-]/g, '');
             base64Code = base64Code.padEnd(base64Code.length + (4 - base64Code.length % 4) % 4, '=');
             
-            // Decodifica o Base64 nativamente usando uma técnica que aceita QUALQUER acentuação
+
             const binaryString = window.atob(base64Code.replace(/-/g, '+').replace(/_/g, '/'));
             const len = binaryString.length;
             const bytes = new Uint8Array(len);
@@ -27,15 +24,15 @@
             }
             const decodedHtml = new TextDecoder('utf-8').decode(bytes);
 
-            // Injeta o HTML na página limpa
+
             document.open();
             document.write(decodedHtml);
             document.close();
         } catch (e) {
-            document.body.innerHTML = "<h2>Erro ao ler o código do QR Code.</h2>";
+            document.body.innerHTML = "<h1>!!BUGBOOT!!</h1><br><pre>certify if is realy base64 or if is raw base64. <br> if this is an bug please contact us</pre>";
         }
     } else {
-        document.body.innerHTML = "<h2>Nenhum HTML encontrado no QR Code.</h2>";
+        document.body.innerHTML = "<h2>This HTML-IN-QR do not have an code to run!!</h2><pre> O: please put an code</pre>";
     }
 </script>
 </body>
