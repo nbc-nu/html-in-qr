@@ -11,30 +11,40 @@
     if (base64Code) {
         try {
 
+            base64Code = base64Code.replace(/[^A-Za-z0-9+/=_-]/g, '');
+            
+
             base64Code = base64Code.padEnd(base64Code.length + (4 - base64Code.length % 4) % 4, '=');
             
-            const rawData = window.atob(base64Code.replace(/-/g, '+').replace(/_/g, '/'));
+
+            const cleanBase64 = base64Code.replace(/-/g, '+').replace(/_/g, '/');
+            
+
+            const rawData = window.atob(cleanBase64);
             const outputArray = new Uint8Array(rawData.length);
             for (let i = 0; i < rawData.length; ++i) {
                 outputArray[i] = rawData.charCodeAt(i);
             }
             
-            // Decodifica usando o padrão universal UTF-8
+
             const decodedHtml = new TextDecoder('utf-8').decode(outputArray);
 
             document.open();
             document.write(decodedHtml);
             document.close();
         } catch (e) {
+            
             try {
-                const rawData = window.atob(base64Code);
+                const rawData = window.atob(base64Code.replace(/[^A-Za-z0-9+/=]/g, ''));
                 document.open();
                 document.write(rawData);
                 document.close();
             } catch (err2) {
-                document.body.innerHTML = "<h3>OPS! something went wrong :(</h3>";
+                document.body.innerHTML = "<h3>Erro ao processar o código do QR Code.</h3>";
             }
         }
+    } else {
+        document.body.innerHTML = "<h3>Nenhum código foi enviado na URL.</h3>";
     }
 </script>
 </body>
