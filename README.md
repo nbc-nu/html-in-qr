@@ -19,3 +19,6 @@ https://nbc-nu.github.io/html-in-qr/?t=html&c= <---- cole seu html em uma linha 
 
 # IMPORTANTE!! EXTREMAMENTE RECOMENDADO!!
 Quando colocar o html, certifique-se de compilar para Base64, senão o celular pode achar que é uma nota
+
+
+
