@@ -5,32 +5,38 @@
 </head>
 <body>
 <script>
-    // Captura o parâmetro ?c= da URL
     const params = new URLSearchParams(window.location.search);
     let base64Code = params.get('c');
 
     if (base64Code) {
         try {
-            // Corrige preenchimento automático se faltar o '=' no final do QR Code
+
             base64Code = base64Code.padEnd(base64Code.length + (4 - base64Code.length % 4) % 4, '=');
             
-            // Decodifica o Base64 de forma moderna e segura para UTF-8 (acentos e símbolos)
             const rawData = window.atob(base64Code.replace(/-/g, '+').replace(/_/g, '/'));
             const outputArray = new Uint8Array(rawData.length);
             for (let i = 0; i < rawData.length; ++i) {
                 outputArray[i] = rawData.charCodeAt(i);
             }
+            
+            // Decodifica usando o padrão universal UTF-8
             const decodedHtml = new TextDecoder('utf-8').decode(outputArray);
 
-            // Substitui o conteúdo com segurança
             document.open();
             document.write(decodedHtml);
             document.close();
         } catch (e) {
-            document.body.innerHTML = "<h3>:O <br> OPS! something rent wrong!</h3>";
-            console.error(e);
+            try {
+                const rawData = window.atob(base64Code);
+                document.open();
+                document.write(rawData);
+                document.close();
+            } catch (err2) {
+                document.body.innerHTML = "<h3>OPS! something went wrong :(</h3>";
+            }
         }
     }
 </script>
 </body>
 </html>
+
